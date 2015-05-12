@@ -1,5 +1,5 @@
 /*
- * Copyright © 2014 - 2015 | Alexander01998 | All rights reserved.
+ * Copyright Â© 2014 - 2015 | Alexander01998 | All rights reserved.
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15,7 +15,7 @@ import tk.wurst_client.commands.Cmd.Info;
 
 @Info(help = "Enchants items with everything.",
 	name = "enchant",
-	syntax = {"[all]"})
+	syntax = {"[all]", "[god]"})
 public class EnchantCmd extends Cmd
 {
 	@Override
@@ -64,8 +64,25 @@ public class EnchantCmd extends Cmd
 			if(items == 1)
 				WurstClient.INSTANCE.chat.message("Enchanted 1 item.");
 			else
-				WurstClient.INSTANCE.chat.message("Enchanted " + items
-					+ " items.");
+				WurstClient.INSTANCE.chat.message("Enchanted " + items	+ " items.");
+		}else if(args[0].equals("god"))
+		{
+			ItemStack currentItem = Minecraft.getMinecraft().thePlayer.inventory.getCurrentItem();
+			if(currentItem == null)
+				error("There is no item in your hand.");
+			for(Enchantment enchantment : Enchantment.enchantmentsList)
+				try
+				{
+					if(enchantment == Enchantment.silkTouch)
+						continue;
+					currentItem.addEnchantment(enchantment, 32767);
+				}catch(Exception e)
+				{	
+				}	
+			if(items == 1)
+				WurstClient.INSTANCE.chat.message("Enchanted 1 item.");
+			else
+				WurstClient.INSTANCE.chat.message("Enchanted " + items	+ " items.");
 		}else
 			syntaxError();
 	}
